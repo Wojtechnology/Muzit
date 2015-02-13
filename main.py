@@ -20,12 +20,15 @@ import tornado.ioloop
 import os.path
 
 # Required to choose port on which the server runs
-from tornado import define, options
+from tornado.options import define, options
 
 # Default runs on port 8000
 define('port', default = 8000, help = 'run on given port', type = int)
 
-
+# Class for the main page request handler
+class IndexHandler(tornado.web.RequestHandler):
+	def get(self):
+		self.render('main.html')
 
 # If file was ran from command line, do the following
 if __name__ == '__main__':
