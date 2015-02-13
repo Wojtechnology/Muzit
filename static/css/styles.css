@@ -65,7 +65,7 @@ a {
 #sidebar, #sidebar a {
     color:#ffffff;
     background-color:transparent;
-	text-shadow:1px 0 1px #888888;
+	  /* text-shadow:1px 0 1px #888888; */
 }
 #sidebar a.logo {
   display:block;
@@ -73,7 +73,7 @@ a {
   background-color:#fff;
   color:#777777;
   height:40px;
-  width:40px;
+  width:120px;
   margin:15px;
   font-size:26px;
   font-weight:700;
@@ -99,19 +99,23 @@ a {
   #sidebar a.logo {
     font-size:50px;
     height:75px;
-    width:75px;
+    width: 225px;
     margin-bottom:30px;
   }
 }
 
 /* actives and hovers */
 
-.buttonSide{
-  color: #B81D18;
+#sidebar ul {
+  background-color: rgba(184,29,24,0.5);
 }
 
-.active{
+#sidebar .buttonSide:hover{
   background: rgba(255,255,255,0.5);
+}
+
+.active {
+  text-decoration: underline;
 }
 
 

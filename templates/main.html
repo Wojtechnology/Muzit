@@ -4,16 +4,16 @@
 	<style type="text/css">
 		.box{background:url("{{ static_url("images/sideBarBack.jpg") }}");}
 	</style>
-	<h1 style="color: #999999">Muzit</h1>
+	<a class="logo" href="#">Muzit</a>
     <ul class="nav">
-        <li class="active buttonSide"><a href="#featured">Top</a>
+        <li class="active buttonSide toggleActive" id="top"><a href="#featured">Top</a>
         </li>
-        <li class="buttonSide"><a href="#stories">New</a>
+        <li class="buttonSide toggleActive" id="new"><a href="#stories">New</a>
         </li>
     </ul>
     <ul class="nav hidden-xs" id="sidebar-footer">
         <li>
-          <a href="http://wojtechnology.com">Made by Wojtechnology</a>
+          <a href="http://wojtechnology.com" class="buttonSide">Made by Wojtechnology</a>
         </li>
     </ul>
 {% end %}
