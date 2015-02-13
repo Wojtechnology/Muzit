@@ -16,6 +16,9 @@ import tornado.httpserver
 import tornado.options
 import tornado.ioloop
 
+# Imports for modules
+import modules
+
 # Required to set paths for templates and static files
 import os.path
 
@@ -41,6 +44,7 @@ if __name__ == '__main__':
 		handlers = [(r'/', IndexHandler)],
 		template_path = os.path.join(os.path.dirname(__file__), 'templates'),
 		static_path = os.path.join(os.path.dirname(__file__), 'static'),
+		ui_modules = {'SongEntry': modules.SongEntryModule},
 		debug = True
 	)
 	httpServer = tornado.httpserver.HTTPServer(app)

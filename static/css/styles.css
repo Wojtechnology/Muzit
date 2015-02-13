@@ -45,7 +45,6 @@ a {
     position: absolute;
     right: 0;
     top: 0;
-    background-image:url('http://lorempixel.com/1024/760/nature/3/');
     background-size:cover;
     background-attachment:fixed;
 }
@@ -105,7 +104,15 @@ a {
   }
 }
 
+/* actives and hovers */
 
+.buttonSide{
+  color: #B81D18;
+}
+
+.active{
+  background: rgba(255,255,255,0.5);
+}
 
 
 /* bootstrap overrides */
