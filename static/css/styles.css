@@ -4,12 +4,13 @@
 
 /* custom template */
 html, body {
-   height: 100%;
-   font-family:'Open Sans',arial,sans-serif;
+  height: 100%;
+  font-family:'Open Sans',arial,sans-serif;
 }
 
 a {
   color:#222222;
+  font-weight: 400;
 }
 
 .wrapper, .row {
@@ -67,6 +68,12 @@ a {
     background-color:transparent;
 	  /* text-shadow:1px 0 1px #888888; */
 }
+
+#sidebar {
+  box-shadow: 0px 1px 5px #888888;
+  z-index: 1;
+}
+
 #sidebar a.logo {
   display:block;
   padding:3px;
@@ -82,7 +89,8 @@ a {
   text-shadow:0 0 0;
 }
 #sidebar-footer {
-  position:absolute;bottom:5px;
+  position: absolute;
+  bottom: 5px;
 }
 #footer {
   margin-bottom:20px;
@@ -94,6 +102,7 @@ a {
     text-align:center;
     margin:0 auto;
     margin-top:30px;
+    box-shadow: none;
   }
   #sidebar a.logo {
     font-size:26px;
@@ -106,6 +115,13 @@ a {
     height: auto;
     *zoom:1;
   }
+}
+
+.songEntry {
+  background-color: #eeeeee;
+  box-shadow: 0px 1px 5px #888888;
+  margin: 10px 0px;
+  z-index: 1;
 }
 
 /* actives and hovers */
@@ -121,7 +137,6 @@ a {
 .active {
   text-decoration: underline;
 }
-
 
 /* bootstrap overrides */
 
