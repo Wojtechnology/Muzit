@@ -94,13 +94,17 @@ a {
     text-align:center;
     margin:0 auto;
     margin-top:30px;
-    font-size:26px;
   }
   #sidebar a.logo {
-    font-size:50px;
-    height:75px;
-    width: 225px;
+    font-size:26px;
+    height: 40px;
+    width: 120px;
     margin-bottom:30px;
+  }
+  .column {
+    margin-top: 20px;
+    height: auto;
+    *zoom:1;
   }
 }
 

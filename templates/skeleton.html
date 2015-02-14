@@ -3,7 +3,7 @@
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
-		<title>Basis Template for Bootstrap 3</title>
+		<title>{{ browser_title }}</title>
 		<meta name="generator" content="Bootply" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<link href="{{ static_url("css/bootstrap.min.css") }}" rel="stylesheet">
@@ -45,6 +45,6 @@
     <!-- File to control side window -->
     <script src="{{ static_url("js/mainController.js")}}"></script>
     <!-- File to control the main window -->
-    <script src="{{ static_url("js/mainController.js")}}"></script>
+    <script src="{{ static_url("js/sideController.js")}}"></script>
 	</body>
 </html>

@@ -31,7 +31,7 @@ define('port', default = 8000, help = 'run on given port', type = int)
 # Class for the main page request handler
 class IndexHandler(tornado.web.RequestHandler):
 	def get(self):
-		self.render('main.html')
+		self.render('main.html', browser_title = "Muzit")
 
 # If file was ran from command line, do the following
 if __name__ == '__main__':
