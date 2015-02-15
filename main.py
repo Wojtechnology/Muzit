@@ -6,7 +6,7 @@
 # Main file for tornado server
 # Application for uploading and listening to music
 #
-# Last Update: February 13th, 2015
+# Last Update: February 14th, 2015
 #
 ##########################################
 
@@ -16,7 +16,10 @@ import tornado.httpserver
 import tornado.options
 import tornado.ioloop
 
-# Imports for modules
+# Import for pymongo
+import pymongo 
+
+# Import for modules
 import modules
 
 # Required to set paths for templates and static files
@@ -27,6 +30,20 @@ from tornado.options import define, options
 
 # Default runs on port 8000
 define('port', default = 8000, help = 'run on given port', type = int)
+
+# Application class for the Tornado server
+class Application(tornado.web.Application):
+	def __init__(self):
+		conn = pymongo.Connection('localhost',  27017)
+		self.db = conn['muzit']
+		handlers = [(r'/', IndexHandler)]
+		settings = dict(
+			template_path = os.path.join(os.path.dirname(__file__), 'templates'),
+			static_path = os.path.join(os.path.dirname(__file__), 'static'),
+			ui_modules = {'SongEntry': modules.SongEntryModule},
+			debug = True
+		)
+		tornado.web.Application.__init__(self, handlers, **settings)
 
 # Class for the main page request handler
 class IndexHandler(tornado.web.RequestHandler):
@@ -40,13 +57,6 @@ if __name__ == '__main__':
 	tornado.options.parse_command_line();
 
 	# Creates app, setting handlers and default paths
-	app = tornado.web.Application(
-		handlers = [(r'/', IndexHandler)],
-		template_path = os.path.join(os.path.dirname(__file__), 'templates'),
-		static_path = os.path.join(os.path.dirname(__file__), 'static'),
-		ui_modules = {'SongEntry': modules.SongEntryModule},
-		debug = True
-	)
-	httpServer = tornado.httpserver.HTTPServer(app)
+	httpServer = tornado.httpserver.HTTPServer(Application())
 	httpServer.listen(options.port)
 	tornado.ioloop.IOLoop.instance().start()
