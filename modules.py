@@ -16,3 +16,8 @@ import tornado.web
 class SongEntryModule(tornado.web.UIModule):
 	def render(self):
 		return self.render_string('modules/songEntry.html')
+
+# Template for the title entry module
+class TitleEntryModule(tornado.web.UIModule):
+	def render(self, title):
+		return self.render_string('modules/titleEntry.html', title = title)

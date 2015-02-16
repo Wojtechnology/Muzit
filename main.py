@@ -19,8 +19,9 @@ import tornado.ioloop
 # Import for pymongo
 import pymongo 
 
-# Import for modules
-import modules
+# Self written Tornado imports
+import modules as Modules
+import handlers as Handlers
 
 # Required to set paths for templates and static files
 import os.path
@@ -36,19 +37,20 @@ class Application(tornado.web.Application):
 	def __init__(self):
 		conn = pymongo.Connection('localhost',  27017)
 		self.db = conn['muzit']
-		handlers = [(r'/', IndexHandler)]
+		handlers = [
+			(r'/', Handlers.IndexHandler),
+			(r'/upload', Handlers.UploadHandler)
+		]
 		settings = dict(
 			template_path = os.path.join(os.path.dirname(__file__), 'templates'),
 			static_path = os.path.join(os.path.dirname(__file__), 'static'),
-			ui_modules = {'SongEntry': modules.SongEntryModule},
+			ui_modules = {
+				'SongEntry': Modules.SongEntryModule,
+				'TitleEntry': Modules.TitleEntryModule
+			},
 			debug = True
 		)
 		tornado.web.Application.__init__(self, handlers, **settings)
-
-# Class for the main page request handler
-class IndexHandler(tornado.web.RequestHandler):
-	def get(self):
-		self.render('main.html', browser_title = "Muzit")
 
 # If file was ran from command line, do the following
 if __name__ == '__main__':

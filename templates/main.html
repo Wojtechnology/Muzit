@@ -6,11 +6,11 @@
 	</style>
 	<a class="logo" href="#">Muzit</a>
     <ul class="nav">
-        <li class="active buttonSide toggleActive" id="top"><a href="#featured"><i class="fa fa-trophy"></i> Top</a>
+        <li class="active buttonSide toggleActive" id="top"><a><i class="fa fa-trophy"></i> Top</a>
         </li>
-        <li class="buttonSide toggleActive" id="new"><a href="#stories"><i class="fa fa-star"></i> New</a>
+        <li class="buttonSide toggleActive" id="new"><a><i class="fa fa-star"></i> New</a>
         </li>
-        <li style="margin-top: 10px;" class="buttonSide toggleActive" id="new"><a href="#stories"><i class="fa fa-cloud-upload"></i> Upload</a>
+        <li style="margin-top: 10px;" class="buttonSide toggleActive" id="upload"><a><i class="fa fa-cloud-upload"></i> Upload</a>
         </li>
     </ul>
     <ul class="nav hidden-xs" id="sidebar-footer">
@@ -21,5 +21,8 @@
 {% end %}
 
 {% block content %}
-	{% module SongEntry() %}
+    {% module TitleEntry("Top") %}
+	{% for i in range(3)%}
+        {% module SongEntry() %}
+    {% end %}
 {% end %}

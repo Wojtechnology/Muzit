@@ -37,7 +37,8 @@ a {
 }
 
 .column .padding {
-    padding: 20px;
+    padding: 0px 20px;
+    margin-top: -20px;
 }
 
 .box {
@@ -56,11 +57,6 @@ a {
 
 #main {
     background-color:#fefefe;
-}
-#main .img-circle {
-  margin-top:18px;
-  height:70px;
-  width:70px;
 }
 
 #sidebar, #sidebar a {
@@ -124,6 +120,39 @@ a {
   z-index: 1;
 }
 
+.songEntry h3 {
+  padding-bottom: 10px;
+  display: inline-block;
+}
+
+.imgCircle {
+  margin-right: 5px;
+  height:40px;
+  width:40px;
+}
+
+.upButton:hover{
+  color: grey;
+  cursor: pointer;
+}
+
+.downButton:hover{
+  color: grey;
+  cursor: pointer;
+}
+
+.votingBlock {
+  display: inline-block;
+  width: 50px;
+  padding: 0px 10px;
+  margin-right: 20px;
+}
+
+.contentBlock {
+  display: inline-block;
+  padding: 0px 10px;
+}
+
 /* actives and hovers */
 
 #sidebar ul {
@@ -131,7 +160,11 @@ a {
   border-radius: 10px;
 }
 
-#sidebar .buttonSide:hover{
+#sidebar .buttonSide {
+  cursor: pointer;
+}
+
+#sidebar .buttonSide:hover {
   background: rgba(255,255,255,0.5);
   border-radius: 10px;
 }
