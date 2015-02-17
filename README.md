@@ -1,5 +1,5 @@
 # StreetMuse
-*Name pending.* Music with friends. Connect more deeply with your favourite artists.
+*Name pending.* Helping dumb people find good music.
 
 ### Key Ideas:
 * Reddit-like blog features
