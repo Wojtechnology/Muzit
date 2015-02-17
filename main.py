@@ -32,7 +32,7 @@ from tornado.options import define, options
 define('port', default = 8000, help = 'run on given port', type = int)
 
 # Constants
-CUSTOM_ERROR_MESSAGE = 'CUSTOM ERROR MESSAGE: '
+CUSTOM_ERROR_MESSAGE = 'MAIN.PY ERROR MESSAGE: '
 
 # Application class for the Tornado server
 class Application(tornado.web.Application):
@@ -108,25 +108,33 @@ class UploadHandler(tornado.web.RequestHandler):
 		else:
 			songs = self.application.db.songs
 
-			filePath = saveFile(song['data'], song['filename'], 'mp3')
+			status = {
+				'icon': 'check-circle',
+				'color': 'green',
+				'message': 'Successfully uploaded '
+			}
+
+			filePath = File.saveMusicFile(song['body'], song['filename'], song['content_type'])
 
 			if songName == '':
-				songName = song['filename']
+				songName = song['filename'][:-4]
 
 			songObj = {
 				'songName': songName,
 				'userName': submitter,
-				'time': datetime.datetime
+				'time': datetime.datetime,
+				'filePath': filePath
 			}
 
 			print songObj
 
 			self.render(
-				'uploadThanks.html',
+				'uploadStatus.html',
 				browserTitle = 'Muzit',
-				message = 'Successfully uploaded ' + songName,
+				message = status['message'] + songName,
 				name = submitter,
 				icon = 'cloud-upload',
+				status = status,
 				state = 2
 			)
 

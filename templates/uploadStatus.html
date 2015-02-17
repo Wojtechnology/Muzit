@@ -4,7 +4,7 @@
 
 {% module TitleEntry(icon, message) %}
 <div style="text-align: center;">
-  <i style="color: green;" class="fa fa-check-circle fa-5x"></i>
+  <i style="color: {{ status['color'] }};" class="fa fa-{{ status['icon'] }} fa-5x"></i>
   <h5 style="font-weight: 700;">Thanks {{ name }}!</h5>
 </div>
 {% end %}
