@@ -9,7 +9,7 @@
 #
 ##########################################
 
-# Required Tornado import
+# 3rd party imports
 import tornado.web
 
 # Template for the song entry module

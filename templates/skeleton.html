@@ -3,7 +3,7 @@
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
-		<title>{{ browser_title }}</title>
+		<title>{{ browserTitle }}</title>
 		<meta name="generator" content="Bootply" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<link href="{{ static_url("css/bootstrap.min.css") }}" rel="stylesheet">
@@ -20,7 +20,33 @@
           
             <!-- sidebar -->
             <div class="column col-sm-3" id="sidebar">
-                {% block sideBar %}{% end %}
+                <style type="text/css">.box{background:url("{{ static_url("images/sideBarBack.jpg") }}");}</style>
+                <a class="logo">Muzit</a>
+                <ul class="nav">
+                    <li class="
+                    {% if state == 0 %}
+                        active
+                    {% end %}
+                    buttonSide toggleActive" id="top"><a href="top"><i class="fa fa-trophy"></i> Top</a>
+                    </li>
+                    <li class="
+                    {% if state == 1 %}
+                        active
+                    {% end %}
+                    buttonSide toggleActive" id="new"><a href="new"><i class="fa fa-star"></i> New</a>
+                    </li>
+                    <li style="margin-top: 10px;" class="
+                    {% if state == 2 %}
+                        active
+                    {% end %}
+                    buttonSide toggleActive" id="upload"><a href="upload"><i class="fa fa-cloud-upload"></i> Upload</a>
+                    </li>
+                </ul>
+                <ul class="nav hidden-xs" id="sidebar-footer">
+                    <li>
+                      <a href="http://wojtechnology.com" class="buttonSide">Made by Wojtechnology</a>
+                    </li>
+                </ul>
             </div>
             <!-- /sidebar -->
           

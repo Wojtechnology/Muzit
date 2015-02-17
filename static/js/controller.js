@@ -5,7 +5,7 @@
 // SECTION - JQuery Functions
 
 // Toggles active status on click
-$('.toggleActive').click(function() {
+/*$('.toggleActive').click(function() {
 	resetAllActive();
 	$(this).addClass('active');
 });
@@ -21,11 +21,11 @@ $('#upload').click(function(){
 });
 
 $('#new').click(function(){
-	Content.loadXMLDoc("top");
+	Content.loadXMLDoc("new");
 });
 
 $('#top').click(function(){
-	Content.loadXMLDoc("new");
+	Content.loadXMLDoc("top");
 });
 
 // SECTION - AJAX Functions
@@ -33,9 +33,6 @@ $('#top').click(function(){
 // AJAX call object for controlling the content in the main windows
 
 var Content = {
-	currentPath: "/top",
-	numItems: 10,
-	firstItem: 0,
 	loadXMLDoc: function(path) {
 
 		var xmlhttp;
@@ -60,4 +57,4 @@ var Content = {
 		xmlhttp.send();
 
 	}
-};
+}; */
