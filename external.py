@@ -1,3 +1,14 @@
+##########################################
+#
+# Author: Wojtek Swiderski
+# 
+# File containing 3rd party API code
+# Application for uploading and listening to music
+#
+# Last Update: February 17th, 2015
+#
+##########################################
+
 # 3rd party imports
 import urllib2
 import json

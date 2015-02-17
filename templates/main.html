@@ -1,7 +1,7 @@
 {% extends "skeleton.html" %}
 
 {% block content %}
-    {% module TitleEntry(titleEntry) %}
+    {% module TitleEntry(icon, titleEntry) %}
 	{% for i in range(3)%}
         {% module SongEntry() %}
     {% end %}

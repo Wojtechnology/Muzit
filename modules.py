@@ -5,7 +5,7 @@
 # File containing all modules required for the application
 # Application for uploading and listening to music
 #
-# Last Update: February 16th, 2015
+# Last Update: February 17th, 2015
 #
 ##########################################
 
@@ -19,5 +19,5 @@ class SongEntryModule(tornado.web.UIModule):
 
 # Template for the title entry module
 class TitleEntryModule(tornado.web.UIModule):
-	def render(self, title):
-		return self.render_string('modules/titleEntry.html', title = title)
+	def render(self, icon, title):
+		return self.render_string('modules/titleEntry.html', title = title, icon = icon)

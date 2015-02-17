@@ -2,8 +2,9 @@
 
 {% block content %}
 
-{% module TitleEntry(message) %}
-
-<h4>Thanks {{ name }}</h4>
-
+{% module TitleEntry(icon, message) %}
+<div style="text-align: center;">
+  <i style="color: green;" class="fa fa-check-circle fa-5x"></i>
+  <h5 style="font-weight: 700;">Thanks {{ name }}!</h5>
+</div>
 {% end %}

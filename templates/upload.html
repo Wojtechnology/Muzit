@@ -2,11 +2,11 @@
 
 {% block content %}
 
-{% module TitleEntry("Uploads") %}
+{% module TitleEntry(icon, "Upload") %}
 
 <script src='https://www.google.com/recaptcha/api.js'></script>
 
-<form method="post" enctype="multipart/form-data">
+<form style="padding-bottom: 20px;" method="post" enctype="multipart/form-data">
   <div class="form-group">
 
 	{% for error in errors %}

@@ -6,7 +6,7 @@
 # Main file for tornado server
 # Application for uploading and listening to music
 #
-# Last Update: February 16th, 2015
+# Last Update: February 17th, 2015
 #
 ##########################################
 
@@ -18,10 +18,12 @@ import tornado.ioloop
 import os.path
 import pymongo
 import logging
+import datetime
 
 # 1st party imports
 import modules as Modules
 import external as External
+import file as File
 
 # Required to choose port on which the server runs
 from tornado.options import define, options
@@ -66,6 +68,7 @@ class UploadHandler(tornado.web.RequestHandler):
 			'upload.html',
 			browserTitle = 'Muzit',
 			errors = [],
+			icon = 'cloud-upload',
 			state = 2
 		)
 
@@ -99,19 +102,31 @@ class UploadHandler(tornado.web.RequestHandler):
 				'upload.html',
 				browserTitle = 'Muzit',
 				errors = errors,
+				icon = 'cloud-upload',
 				state = 2
 			)
 		else:
-			message = 'Successfully uploaded '
-			if not songName == '':
-				message = message + songName
-			else:
-				message = message + song['filename']
+			songs = self.application.db.songs
+
+			filePath = saveFile(song['data'], song['filename'], 'mp3')
+
+			if songName == '':
+				songName = song['filename']
+
+			songObj = {
+				'songName': songName,
+				'userName': submitter,
+				'time': datetime.datetime
+			}
+
+			print songObj
+
 			self.render(
 				'uploadThanks.html',
 				browserTitle = 'Muzit',
-				message = message,
+				message = 'Successfully uploaded ' + songName,
 				name = submitter,
+				icon = 'cloud-upload',
 				state = 2
 			)
 
@@ -122,6 +137,7 @@ class TopHandler(tornado.web.RequestHandler):
 			'main.html',
 			browserTitle = 'Muzit',
 			titleEntry = 'Top',
+			icon = 'trophy',
 			state = 0
 		)
 
@@ -132,6 +148,7 @@ class NewHandler(tornado.web.RequestHandler):
 			'main.html',
 			browserTitle = 'Muzit',
 			titleEntry = 'New',
+			icon = 'star',
 			state = 1
 		)
 
