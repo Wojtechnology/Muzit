@@ -1,23 +1,22 @@
 <div class="row songEntry">
   <span class="votingBlock">
-    <div style="margin-top: 10px;">
-      <i class="fa fa-sort-asc fa-3x upButton"></i>
-      <h4>
-        <small class="text-muted">Likes</small>
-      </h4>
-      <i class="fa fa-sort-desc fa-3x downButton"></i>
-    </div>
+    <input type="hidden" class="userID" value="{{ userID }}"/>
+    <i class="fa fa-sort-asc fa-2x upButton"></i>
+    <h4>
+      <small class="text-muted rating">{{ song['rating'] }}</small>
+    </h4>
+    <i class="fa fa-sort-desc fa-2x downButton"></i>
   </span>    
   <span class="contentBlock">
     <img src="{{ static_url('images/defaultThumbnail.jpg') }}" class="imgCircle">
-    <h5 style="font-weight: 700;">Animals - Martin Garrix</h3>
+    <h5 style="font-weight: 700;">{{ song['songName'] }}</h3>
     <br/>
     <audio preload="none" controls>
-      <source src="{{ static_url('music/horse.mp3') }}">
+      <source src="{{ static_url('music/' + song['filePath']) }}">
       Your browser does not support the audio element.
     </audio>
     <h4>
-      <small class="text-muted"><a href="#" class="text-muted">Comments</a></small>
+      <small class="text-muted"><a href="#" class="text-muted">Comments</a> - {{ song['userName'] }} - {{ time }}</small>
     </h4>
   </span>
 </div>

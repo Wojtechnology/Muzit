@@ -12,6 +12,7 @@
 # 3rd party imports
 import logging
 import os.path
+import string
 
 # Constants
 CUSTOM_ERROR_MESSAGE = 'FILE.PY ERROR MESSAGE: '
@@ -21,9 +22,11 @@ MUSIC_PATH = 'static/music/'
 def saveMusicFile(data, fileName, type):
 	if type == 'audio/mp3':
 		counter = 0
+		for char in '!@#$':
+			fileName = fileName.replace(char, '')
 		songName = fileName[:-4]
 		while os.path.isfile(MUSIC_PATH + fileName):
-			fileName = songName + str(counter) + fileName[-4:]
+			fileName = songName + unicode(counter) + fileName[-4:]
 			counter = counter + 1
 		musicFile = open(MUSIC_PATH + fileName, 'w')
 		musicFile.write(data)

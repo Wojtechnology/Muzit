@@ -18,7 +18,7 @@ import tornado.ioloop
 import os.path
 import pymongo
 import logging
-import datetime
+import time
 
 # 1st party imports
 import modules as Modules
@@ -43,7 +43,8 @@ class Application(tornado.web.Application):
 			(r'/', IndexHandler),
 			(r'/upload', UploadHandler),
 			(r'/top', TopHandler),
-			(r'/new', NewHandler)
+			(r'/new', NewHandler),
+			(r'/vote', VoteHandler)
 		]
 		settings = dict(
 			template_path = os.path.join(os.path.dirname(__file__), 'templates'),
@@ -52,6 +53,8 @@ class Application(tornado.web.Application):
 				'SongEntry': Modules.SongEntryModule,
 				'TitleEntry': Modules.TitleEntryModule
 			},
+			cookie_secret = 'wwaApJxeTnmzwC5vFjkWsPfYhPjKyUyNio8YwLZj81o=',
+			xsrf_cookies = True,
 			debug = True
 		)
 		tornado.web.Application.__init__(self, handlers, **settings)
@@ -76,9 +79,9 @@ class UploadHandler(tornado.web.RequestHandler):
 		errors = []
 		song = None
 		fileData = self.request.files
-		submitter = self.get_argument('submitter')
-		songName = self.get_argument('songName')
-		captchaRes = self.get_argument('g-recaptcha-response')
+		submitter = self.get_argument('submitter', '')
+		songName = self.get_argument('songName', '')
+		captchaRes = self.get_argument('g-recaptcha-response', '')
 
 		if len(fileData) > 0:
 			song = self.request.files['songFile'][0]
@@ -106,7 +109,6 @@ class UploadHandler(tornado.web.RequestHandler):
 				state = 2
 			)
 		else:
-			songs = self.application.db.songs
 
 			status = {
 				'icon': 'check-circle',
@@ -116,17 +118,25 @@ class UploadHandler(tornado.web.RequestHandler):
 
 			filePath = File.saveMusicFile(song['body'], song['filename'], song['content_type'])
 
-			if songName == '':
-				songName = song['filename'][:-4]
+			if filePath == 'file.error':
+				status['icon'] = 'minus-circle'
+				status['color'] = 'red'
+				status['message'] = 'Failure uploading '
 
-			songObj = {
-				'songName': songName,
-				'userName': submitter,
-				'time': datetime.datetime,
-				'filePath': filePath
-			}
+			else:
+				if songName == '':
+					songName = song['filename'][:-4]
 
-			print songObj
+				songObj = {
+					'songName': songName,
+					'userName': submitter,
+					'time': time.time(),
+					'filePath': filePath,
+					'rating': 0
+				}
+
+				songs = self.application.db.songs
+				songs.insert(songObj)
 
 			self.render(
 				'uploadStatus.html',
@@ -141,24 +151,37 @@ class UploadHandler(tornado.web.RequestHandler):
 # Class for the top page request handler
 class TopHandler(tornado.web.RequestHandler):
 	def get(self):
+		songs = self.application.db.songs.find().sort('rating', pymongo.DESCENDING)
 		self.render(
 			'main.html',
 			browserTitle = 'Muzit',
 			titleEntry = 'Top',
 			icon = 'trophy',
+			songs = songs,
 			state = 0
 		)
 
 # Class for the new AJAX request handler
 class NewHandler(tornado.web.RequestHandler):
 	def get(self):
+		songs = self.application.db.songs.find().sort('time', pymongo.DESCENDING)
 		self.render(
 			'main.html',
 			browserTitle = 'Muzit',
 			titleEntry = 'New',
 			icon = 'star',
+			songs = songs,
 			state = 1
 		)
+
+# Class for voting, keeping track of who has voted using secure cookies
+class VoteHandler(tornado.web.RequestHandler):
+	def post(self):
+		voteList = self.get_secure_cookie('voteList')
+		voteList = voteList if voteList else dict()
+		userID = self.get_argument('userID', '')
+		type = self.get_argument('type', '')
+		exists = voteList.contains('userID')
 
 # If file was ran from command line, do the following
 if __name__ == '__main__':

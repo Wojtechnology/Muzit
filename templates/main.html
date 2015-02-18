@@ -2,7 +2,7 @@
 
 {% block content %}
     {% module TitleEntry(icon, titleEntry) %}
-	{% for i in range(3)%}
-        {% module SongEntry() %}
+	{% for song in songs %}
+        {% module SongEntry(song) %}
     {% end %}
 {% end %}

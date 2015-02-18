@@ -131,14 +131,30 @@ a {
   width:25px;
 }
 
-.upButton:hover{
-  color: grey;
+.upButton:hover {
+  color: white;
   cursor: pointer;
 }
 
-.downButton:hover{
-  color: grey;
+.orangeVote {
+  color: orange;
+}
+
+.orangeVote:hover {
+  color: orange;
+}
+
+.downButton:hover {
+  color: white;
   cursor: pointer;
+}
+
+.blueVote {
+  color: blue;
+}
+
+.blueVote:hover {
+  color: blue;
 }
 
 .votingBlock {

@@ -7,6 +7,7 @@
 <script src='https://www.google.com/recaptcha/api.js'></script>
 
 <form style="padding-bottom: 20px;" method="post" enctype="multipart/form-data">
+  {% raw xsrf_form_html() %}
   <div class="form-group">
 
 	{% for error in errors %}
