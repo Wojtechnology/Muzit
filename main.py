@@ -19,6 +19,8 @@ import os.path
 import pymongo
 import logging
 import time
+import json
+import bson
 
 # 1st party imports
 import modules as Modules
@@ -40,7 +42,7 @@ class Application(tornado.web.Application):
 		conn = pymongo.Connection('localhost',  27017)
 		self.db = conn['muzit']
 		handlers = [
-			(r'/', IndexHandler),
+			(r'/', TopHandler),
 			(r'/upload', UploadHandler),
 			(r'/top', TopHandler),
 			(r'/new', NewHandler),
@@ -59,14 +61,10 @@ class Application(tornado.web.Application):
 		)
 		tornado.web.Application.__init__(self, handlers, **settings)
 
-# Class for the main page request handler which redirects to top
-class IndexHandler(tornado.web.RequestHandler):
-	def get(self):
-		self.redirect('/top')
-
 # Class for the upload page request handler
 class UploadHandler(tornado.web.RequestHandler):
 	def get(self):
+		self.xsrf_token
 		self.render(
 			'upload.html',
 			browserTitle = 'Muzit',
@@ -151,26 +149,34 @@ class UploadHandler(tornado.web.RequestHandler):
 # Class for the top page request handler
 class TopHandler(tornado.web.RequestHandler):
 	def get(self):
+		self.xsrf_token
 		songs = self.application.db.songs.find().sort('rating', pymongo.DESCENDING)
+		voteList = self.get_secure_cookie('voteList')
+		voteList = json.loads(voteList) if voteList else dict()
 		self.render(
 			'main.html',
 			browserTitle = 'Muzit',
 			titleEntry = 'Top',
 			icon = 'trophy',
 			songs = songs,
+			voteList = voteList,
 			state = 0
 		)
 
 # Class for the new AJAX request handler
 class NewHandler(tornado.web.RequestHandler):
 	def get(self):
+		self.xsrf_token
 		songs = self.application.db.songs.find().sort('time', pymongo.DESCENDING)
+		voteList = self.get_secure_cookie('voteList')
+		voteList = json.loads(voteList) if voteList else dict()
 		self.render(
 			'main.html',
 			browserTitle = 'Muzit',
 			titleEntry = 'New',
 			icon = 'star',
 			songs = songs,
+			voteList = voteList,
 			state = 1
 		)
 
@@ -178,10 +184,25 @@ class NewHandler(tornado.web.RequestHandler):
 class VoteHandler(tornado.web.RequestHandler):
 	def post(self):
 		voteList = self.get_secure_cookie('voteList')
-		voteList = voteList if voteList else dict()
+		voteList = json.loads(voteList) if voteList else dict()
 		userID = self.get_argument('userID', '')
 		type = self.get_argument('type', '')
-		exists = voteList.contains('userID')
+		song = self.application.db.songs.find_one({'_id': bson.ObjectId(userID)})
+		if not song:
+			logging.error(CUSTOM_ERROR_MESSAGE + 'Could not find song')
+		if not voteList.get(userID):
+			voteList[userID] = 1 if type == 'up' else -1
+			song['rating'] = song['rating'] + 1 if type == 'up' else song['rating'] - 1
+		elif voteList[userID] == 1 and type == 'down':
+			voteList[userID] = -1
+			song['rating'] = song['rating'] - 2
+		elif voteList[userID] == -1 and type == 'up':
+			voteList[userID] = 1
+			song['rating'] = song['rating'] + 2
+		print song['rating']
+		self.set_secure_cookie('voteList', json.dumps(voteList))
+		self.application.db.songs.save(song)
+		self.write(str(song['rating']))
 
 # If file was ran from command line, do the following
 if __name__ == '__main__':

@@ -3,6 +3,6 @@
 {% block content %}
     {% module TitleEntry(icon, titleEntry) %}
 	{% for song in songs %}
-        {% module SongEntry(song) %}
+        {% module SongEntry(song, voteList) %}
     {% end %}
 {% end %}

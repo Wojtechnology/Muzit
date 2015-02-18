@@ -1,11 +1,16 @@
-<div class="row songEntry">
+<div><div class="row songEntry">
   <span class="votingBlock">
     <input type="hidden" class="userID" value="{{ userID }}"/>
-    <i class="fa fa-sort-asc fa-2x upButton"></i>
+    <i class="fa fa-sort-asc fa-2x upButton {% if preVote == 1 %}
+      orangeVote
+    {% end %}
+    "></i>
     <h4>
       <small class="text-muted rating">{{ song['rating'] }}</small>
     </h4>
-    <i class="fa fa-sort-desc fa-2x downButton"></i>
+    <i class="fa fa-sort-desc fa-2x downButton {% if preVote == -1 %}
+      blueVote
+    {% end %}"></i>
   </span>    
   <span class="contentBlock">
     <img src="{{ static_url('images/defaultThumbnail.jpg') }}" class="imgCircle">
@@ -16,7 +21,8 @@
       Your browser does not support the audio element.
     </audio>
     <h4>
-      <small class="text-muted"><a href="#" class="text-muted">Comments</a> - {{ song['userName'] }} - {{ time }}</small>
+      <small class="text-muted"><a class="text-muted comments">Comments</a> - {{ song['userName'] }} - {{ time }}</small>
     </h4>
   </span>
 </div>
+  <div class="commentPlaceHolder"></div></div>
